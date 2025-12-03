@@ -1,4 +1,5 @@
 const Competition = require('../../models/Competition');
+const logger = require('../../config/logger');
 
 async function handleJoin(socket, io, data, activeCompetitions) {
   const { code, participantName } = data;
@@ -6,6 +7,7 @@ async function handleJoin(socket, io, data, activeCompetitions) {
     const competition = await Competition.findOne({ code });
     
     if (!competition) {
+      logger.warn(`Competition code not found: ${code}`);
       socket.emit('error', { message: 'Competition code not found' });
       return;
     }
@@ -19,6 +21,7 @@ async function handleJoin(socket, io, data, activeCompetitions) {
         participants: new Map(),
         competitionDoc: competition
       });
+      logger.debug('New active competition created', { code, competitionId: competition._id });
     }
 
     const compData = activeCompetitions.get(competition._id.toString());
@@ -28,6 +31,7 @@ async function handleJoin(socket, io, data, activeCompetitions) {
       .find(p => p.name === participantName);
     
     if (existingParticipant) {
+      logger.warn(`Duplicate name attempt: ${participantName} in ${code}`);
       socket.emit('error', { message: 'Name already taken' });
       return;
     }
@@ -79,17 +83,35 @@ async function handleJoin(socket, io, data, activeCompetitions) {
       roundCount: competition.rounds.length
     });
 
-    console.log(`✓ ${participantName} joined ${code} (Total: ${compData.participants.size})`);
+    logger.info(`✓ Participant joined: ${participantName}`, {
+      code,
+      socketId: socket.id,
+      totalParticipants: compData.participants.size
+    });
   } catch (error) {
-    console.error('Join error:', error);
+    logger.error(`Join error: ${error.message}`, {
+      code,
+      participantName,
+      stack: error.stack
+    });
     socket.emit('error', { message: 'Failed to join' });
   }
 }
 
 async function handleOrganizerJoin(socket, io, data) {
-  socket.join(`competition_${data.competitionId}`);
-  socket.isOrganizer = true;
-  console.log('✓ Organizer connected');
+  try {
+    socket.join(`competition_${data.competitionId}`);
+    socket.isOrganizer = true;
+    logger.info(`✓ Organizer connected`, { 
+      socketId: socket.id,
+      competitionId: data.competitionId 
+    });
+  } catch (error) {
+    logger.error(`Organizer join error: ${error.message}`, {
+      competitionId: data.competitionId,
+      stack: error.stack
+    });
+  }
 }
 
 module.exports = { handleJoin, handleOrganizerJoin };
