@@ -1,0 +1,27 @@
+const js = require("@eslint/js");
+const globals = require("globals");
+const nodePlugin = require("eslint-plugin-node");
+const prettierConfig = require("eslint-config-prettier");
+
+module.exports = [
+    js.configs.recommended,
+    {
+        files: ["**/*.js"],
+        languageOptions: {
+            ecmaVersion: "latest",
+            sourceType: "commonjs",
+            globals: {
+                ...globals.node,
+                ...globals.jest,
+            },
+        },
+        plugins: {
+            node: nodePlugin,
+        },
+        rules: {
+            "no-console": "warn",
+            "no-unused-vars": "warn",
+        },
+    },
+    prettierConfig,
+];
