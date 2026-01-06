@@ -3,7 +3,7 @@ const { updateAndBroadcastLeaderboard } = require('../utils/leaderboard');
 
 async function handleStartRound(socket, io, data, activeCompetitions) {
   const { competitionId, roundIndex } = data;
-  
+
   try {
     const competition = await Competition.findById(competitionId);
     if (!competition) {
@@ -248,24 +248,27 @@ async function handleShowFinalResults(competitionId, compData, competition, io) 
       }
     );
 
-    // Update each participant
-    for (const ranking of finalRankings) {
-      await Competition.findByIdAndUpdate(
-        competitionId,
-        {
-          $set: {
-            'participants.$[elem].finalRank': ranking.rank,
-            'participants.$[elem].totalWpm': ranking.averageWpm,
-            'participants.$[elem].totalAccuracy': ranking.averageAccuracy,
-            'participants.$[elem].roundsCompleted': ranking.totalRoundsCompleted,
-            'participants.$[elem].roundScores': ranking.roundScores
+    // PERF FIX: Use bulkWrite instead of loop
+    if (finalRankings.length > 0) {
+      const bulkOps = finalRankings.map(ranking => ({
+        updateOne: {
+          filter: {
+            _id: competitionId,
+            'participants.name': ranking.participantName
+          },
+          update: {
+            $set: {
+              'participants.$.finalRank': ranking.rank,
+              'participants.$.totalWpm': ranking.averageWpm,
+              'participants.$.totalAccuracy': ranking.averageAccuracy,
+              'participants.$.roundsCompleted': ranking.totalRoundsCompleted,
+              'participants.$.roundScores': ranking.roundScores
+            }
           }
-        },
-        {
-          arrayFilters: [{ 'elem.name': ranking.participantName }],
-          new: true
         }
-      );
+      }));
+
+      await Competition.bulkWrite(bulkOps);
     }
 
     console.log('✓ Competition completed');
