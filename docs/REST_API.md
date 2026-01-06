@@ -139,7 +139,14 @@ curl -X GET http://localhost:3000/api/auth/me \
 
 Create a new typing competition. **Requires authentication.**
 
-**Request:**
+**Authentication:** Bearer token required (JWT)
+
+**Headers:**
+```
+Authorization: Bearer <jwt_token>
+```
+
+**Request Body:**
 ```json
 {
   "name": "TechFest 2026",

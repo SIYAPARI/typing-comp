@@ -28,6 +28,7 @@ app.use(
           "https://cdn.socket.io",    // Socket.IO client CDN
           "https://cdn.sheetjs.com",  // SheetJS (xlsx) CDN
           "https://cdnjs.cloudflare.com", // html2pdf and other libs from cdnjs
+          "https://cdn.jsdelivr.net", // Chart.js CDN
         ],
 
         // Allow XHR / fetch / WebSocket connections to our backend
@@ -76,14 +77,20 @@ logger.info('✓ Express app initialized');
 // Routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/export', require('./routes/export'));
+app.use('/api/analytics', require('./routes/analytics'));
 app.use('/api', require('./routes/competition'));
 
 // Static files
 app.use(express.static(path.join(__dirname, './public')));
 
 // Fallback route
-app.get('/', (req, res) => {
+// Fallback route
+app.get('/participant', (req, res) => {
   res.sendFile(path.join(__dirname, './public/participant.html'));
+});
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/index.html'));
 });
 
 app.get('/organizer', (req, res) => {
@@ -96,6 +103,10 @@ app.get('/login', (req, res) => {
 
 app.get('/register', (req, res) => {
   res.sendFile(path.join(__dirname, './public/register.html'));
+});
+
+app.get('/analytics', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/analytics.html'));
 });
 
 module.exports = app;
