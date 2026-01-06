@@ -37,7 +37,7 @@ This document provides detailed specifications for all API endpoints in the Typi
 **Validation Rules:**
 - Name: Required, string
 - Email: Required, valid email format, must be unique
-- Password: Required, minimum 6 characters
+- Password: Required, minimum 12 characters with uppercase, lowercase, number, and special character (@$!%*?&)
 
 ### POST /api/auth/login - Organizer Login
 
