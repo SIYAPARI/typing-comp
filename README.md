@@ -25,6 +25,21 @@ This documentation is organized into modular files for better navigation. See th
 - **[PERFORMANCE.md](./docs/PERFORMANCE.md)** - Performance metrics and optimization
 - **[CONTRIBUTING.md](./docs/CONTRIBUTING.md)** - Contribution guidelines
 
+## 🖼️ Screenshots & Demo
+
+### Participant – Join & Validation
+<img width="1365" height="813" alt="image" src="https://github.com/user-attachments/assets/5da7cdf4-90d3-461c-8e54-c868efb35727" />
+
+
+### Participant – Live Typing Test
+<img width="914" height="801" alt="image" src="https://github.com/user-attachments/assets/593e1016-97a3-4c7c-96fb-364ecb5b9951" />
+
+
+### Organizer – Dashboard
+<img width="1779" height="886" alt="image" src="https://github.com/user-attachments/assets/025d4894-c593-4522-87b0-6b635bcabbd6" />
+
+
+
 ## 🐳 Run with Docker (Recommended)
 
 You can run the entire application stack (App + MongoDB) with a single command. No need to install Node.js or MongoDB locally.
