@@ -2083,3 +2083,100 @@ body {
   border-radius: 999px;
   background: #38bdf8; /* accent color / cursor jaisa */
 }
+
+.toast {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: #e53935;
+  color: #fff;
+  padding: 14px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  z-index: 9999;
+  animation: slideIn 0.3s ease;
+}
+
+.toast.hidden {
+  display: none;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes popupScale {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.role-switch {
+  display: flex;
+  gap: 10px;
+}
+
+.role-btn {
+  padding: 6px 16px;
+  border-radius: 999px;
+  border: 1px solid #3bbec9;
+  background: transparent;
+  color: #3bbec9;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.role-btn.active {
+  background: #3bbec9;
+  color: #000;
+  cursor: default;
+}
+.password-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input input {
+  width: 100%;
+  padding-right: 40px;
+}
+
+.eye-icon {
+  position: absolute;
+  right: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  user-select: none;
+  opacity: 0.7;
+}
+
+.eye-icon:hover {
+  opacity: 1;
+}
+
+.stat-value {
+  transition: transform 0.25s ease;
+}
+
+.stat-card:hover .stat-value {
+  transform: scale(1.15);
+}
