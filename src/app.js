@@ -74,6 +74,15 @@ app.use(requestLogger);
 
 logger.info('✓ Express app initialized');
 
+// Health Check
+app.get('/health', (req, res) => {
+  res.status(200).json({
+    status: 'ok',
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString(),
+  });
+});
+
 // Routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/export', require('./routes/export'));
