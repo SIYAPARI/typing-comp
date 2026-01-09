@@ -4,6 +4,7 @@ This document provides comprehensive documentation for all REST API endpoints in
 
 ## Table of Contents
 
+- [Health Check](#-health-check)
 - [Authentication](#-authentication)
   - [Authentication Flow](#authentication-flow)
   - [User Roles](#user-roles)
@@ -20,6 +21,33 @@ This document provides comprehensive documentation for all REST API endpoints in
 - [Security Features](#️-security-features)
 
 ---
+
+## 🏥 Health Check
+
+### GET /health
+
+Check the health status of the API server.
+
+**cURL Example:**
+```bash
+curl -X GET http://localhost:3000/health
+```
+
+**Response (200):**
+```json
+{
+  "status": "ok",
+  "uptime": 1234.567,
+  "timestamp": "2026-01-09T12:00:00.000Z"
+}
+```
+
+**Errors:**
+- `500` - Server is not healthy
+
+---
+
+## 🔐 Authentication
 
 Most endpoints require authentication using JWT tokens. Include the token in the Authorization header:
 
