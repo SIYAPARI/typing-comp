@@ -157,8 +157,43 @@ router.get('/my-competitions', auth, async (req, res) => {
   }
 });
 
-// GET COMPETITION BY ID
-router.get('/competition/:competitionId', validateCompetitionId, handleValidationErrors, async (req, res) => {
+/**
+ * @swagger
+ * /api/competition/id/{competitionId}:
+ *   get:
+ *     summary: Get full competition details by ID
+ *     tags: [Competitions]
+ *     parameters:
+ *       - in: path
+ *         name: competitionId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Competition ID
+ *     responses:
+ *       200:
+ *         description: Full competition details retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 competition:
+ *                   $ref: '#/components/schemas/Competition'
+ *       404:
+ *         description: Competition not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ */
+router.get('/competition/id/:competitionId', async (req, res) => {
   try {
     const competition = await Competition.findById(req.params.competitionId);
     if (!competition) {
