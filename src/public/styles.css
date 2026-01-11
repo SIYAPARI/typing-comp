@@ -2467,3 +2467,108 @@ body {
     font-size: var(--font-size-base);
   }
 }
+
+/* ================= HEATMAP STYLES ================= */
+.heatmap-container {
+  margin-top: 32px;
+  background: var(--color-surface);
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  text-align: center;
+}
+
+.heatmap-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--color-text);
+}
+
+.heatmap-legend {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}
+
+.legend-fast { background: #4ade80; } /* Green */
+.legend-avg { background: #facc15; }  /* Yellow */
+.legend-slow { background: #f87171; } /* Red */
+
+.keyboard {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px;
+  background: #2d3748;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.keyboard-row {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+}
+
+.key {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  background: #cbd5e0;
+  color: #1a202c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 14px;
+  user-select: none;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.key:hover {
+  transform: translateY(-1px);
+  filter: brightness(110%);
+}
+
+.key.key-fast { background: #4ade80; color: #064e3b; }
+.key.key-avg { background: #facc15; color: #713f12; }
+.key.key-slow { background: #f87171; color: #7f1d1d; }
+.key.key-unused { background: #e2e8f0; color: #a0aec0; opacity: 0.5; }
+
+.key-tooltip {
+  position: absolute;
+  bottom: 110%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1a202c;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: 10;
+}
+
+.key:hover .key-tooltip {
+  opacity: 1;
+}
